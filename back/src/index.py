@@ -4,15 +4,19 @@ from flask_cors import CORS
 import numpy as np
 # from flask_mysqldb import MySQL
 import pymysql
+# from decouple import config
+from dotenv import load_dotenv
 
 app = Flask(__name__)
 CORS(app)
 
-app.config['MYSQL_HOST'] = "185.224.137.180"
-app.config['MYSQL_USER'] = "u549231978_hetic_g_02"
-app.config['MYSQL_PASSWORD'] = "Hetic2023$"
-app.config['MYSQL_DB'] = "u549231978_hetic_g_02"
-app.config['MYSQL_PORT'] = 3306
+load_dotenv()
+
+app.config['MYSQL_HOST'] = os.getenv('MYSQL_HOST')
+app.config['MYSQL_USER'] = os.getenv('MYSQL_USER')
+app.config['MYSQL_PASSWORD'] = os.getenv('MYSQL_PASSWORD')
+app.config['MYSQL_DB'] = os.getenv('MYSQL_DB')
+app.config['MYSQL_PORT'] = int(os.getenv('MYSQL_PORT'))
 
 mysql = pymysql.connect(
     host=app.config['MYSQL_HOST'],
