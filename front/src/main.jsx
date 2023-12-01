@@ -4,6 +4,7 @@ import {
 	createBrowserRouter,
 	RouterProvider,
 } from "react-router-dom";
+import Chat from './routes/chat.jsx'
 import App from './App.jsx'
 import './index.css'
 
@@ -11,6 +12,10 @@ const router = createBrowserRouter([
 	{
 		path: "/",
 		element: <App />
+	},
+	{
+		path: "/chat",
+		element: <Chat />
 	}
 ]);
 
