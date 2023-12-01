@@ -12,12 +12,12 @@ export default function ChatPanel() {
                 </div>
                 <div className="ml-2 font-bold text-2xl">QuickChat</div>
             </div>
-            <div className="flex flex-col items-center bg-indigo-100 border border-gray-200 mt-4 w-full py-6 px-4 rounded-lg">
+            <a href="/profile" className="flex flex-col items-center bg-indigo-100 border border-gray-200 mt-4 w-full py-6 px-4 rounded-lg">
                 <div className="h-20 w-20 rounded-full border flex justify-center items-center bg-indigo-500 text-3xl overflow-hidden">
                     A
                 </div>
                 <div className="text-sm font-semibold mt-2">Aminos</div>
-            </div>
+            </a>
             <div className="flex flex-col mt-8">
                 <div className="flex flex-row items-center justify-between text-xs">
                     <span className="font-bold">Conversations Actives</span>
