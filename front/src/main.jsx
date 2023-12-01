@@ -9,7 +9,8 @@ import './index.css'
 import Profile from './routes/profile.jsx'
 import Form from './routes/new-user.jsx'
 import ChatPanel from './components/ChatPanel.jsx';
-import ChatBox from './components/ChatBox.jsx';
+import Login from './routes/login.jsx';
+import ChatBox from './routes/chat.jsx';
 
 const router = createBrowserRouter([
 	{
@@ -27,6 +28,10 @@ const router = createBrowserRouter([
 	{
 		path: "new-user",
 		element: <Form />
+	},
+	{
+		path: "login",
+		element: <Login />
 	}
 ]);
 
