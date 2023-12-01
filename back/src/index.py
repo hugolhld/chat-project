@@ -65,19 +65,42 @@ def get_users(user_id):
     
 
 @app.route('/sendMsg', methods=['POST'])
+def send_msg():
+    try:
+        data = request.get_json()
+
+        required_fiels = ['content', 'idTo', 'idFrom']
+
+        for field in required_fiels:
+            if field not in data:
+                return jsonify({'error': f'Le champ {field} est manquant'}), 400
+
+        conn = pymysql.connect(**db_config)
+
+        try:
+            with conn.cursor() as cursor:
+                sql = "INSERT INTO messages (content, idTo, idFrom) VALUES (%s, %s, %s)"
+                cursor.execute(sql, (data['content'], data['idTo'], data['idFrom']))
+            conn.commit()
+
+            return jsonify({'success': True})
+        
+        finally:
+            conn.close()
+
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
 
 @app.route('/addUser', methods=['POST'])
 def add_user():
     try:
         data = request.get_json()
 
-        print(data)
-
         required_fields = ['firstName', 'lastName', 'password', 'email']
 
         for field in required_fields:
             if field not in data:
-                print('nets pas dans la table')
                 return jsonify({'error': f'Le champ {field} est manquant'}), 400
 
         conn = pymysql.connect(**db_config)
@@ -92,33 +115,14 @@ def add_user():
         
         finally:
             conn.close()
-
-        # conn = mysql.connect()
-        # cursor = conn.cursor()
-
-        # cursor.execute("INSERT INTO user (first_name, last_name, password, mail) VALUES (%s, %s, %s, %s)", (data['first_name'], data['last_name'], data['password'], data['mail']))
-        # conn.commit()
-
-        # new_user_id = cursor.lastrowid
-
-        # cursor.close()
-        # conn.close()
-
-        # return jsonify({'message': 'Utilisateur créé avec succès', 'user_id': new_user_id}), 201
     
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
 
-
-
-
-
-
-
 @app.route('/messages', methods=['GET'])
 
-@app.route('/messages/<int:id>', methods=['GET'])
+@app.route('/messages/<int:idTo>/<int:idFrom>', methods=['GET'])
 
 @app.route('/users', methods=['GET'])
 
