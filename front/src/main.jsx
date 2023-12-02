@@ -10,6 +10,7 @@ import Form from './routes/new-user.jsx'
 import ChatPanel from './components/ChatPanel.jsx';
 import Login from './routes/login.jsx';
 import ChatBox from './routes/chat.jsx';
+import Signup from './routes/signup.jsx';
 
 const router = createBrowserRouter([
 	{
@@ -27,6 +28,10 @@ const router = createBrowserRouter([
 	{
 		path: "login",
 		element: <Login />
+	},
+	{
+		path: "signup",
+		element: <Signup />
 	}
 ]);
 
@@ -37,7 +42,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
             <div className="flex flex-row h-full max-w-7xl w-full overflow-x-hidden">
 				<ChatPanel />
 				<div className="flex flex-col flex-auto h-full p-6">
-            		<div className="flex flex-col flex-auto flex-shrink-0 bg-gray-100 rounded-2xl h-full p-4">
+            		<div className="flex flex-col flex-auto flex-shrink-0 bg-slate-50 rounded-2xl h-full p-4">
 						<RouterProvider router={router} />
 					</div>
 				</div>

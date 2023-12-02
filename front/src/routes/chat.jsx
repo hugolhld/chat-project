@@ -50,7 +50,7 @@ export default function ChatBox() {
             <div className="flex flex-row items-center h-16 rounded-xl w-full px-4">
                 <div className="flex-grow">
                     <div className="relative w-full">
-                        <input type="text" className="flex w-full border rounded-xl focus:outline-none focus:border-indigo-300 pl-4 h-10 bg-white" onChange={e => setMessage(e.target.value)} />
+                        <input type="text" className="flex w-full border-slate-300 rounded-xl focus:outline-none focus:border-indigo-300 pl-4 h-10 bg-white" onChange={e => setMessage(e.target.value)} />
                     </div>
                 </div>
                 <div className="ml-4">

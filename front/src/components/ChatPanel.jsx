@@ -2,7 +2,7 @@ import Conversation from "./Conversation"
 
 export default function ChatPanel() {
 
-    const user = null
+    const user = true
 
     return (
         <div className="flex flex-col py-8 pl-6 pr-2 w-64 bg-white flex-shrink-0">
