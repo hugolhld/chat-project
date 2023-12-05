@@ -1,0 +1,5 @@
+{
+  "handler": "vc__handler__python.vc_handler",
+  "runtime": "python3.10",
+  "environment": {}
+}

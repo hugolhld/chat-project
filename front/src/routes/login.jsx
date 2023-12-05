@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 export default function Login() {
   const [username, setUsername] = useState('');
@@ -84,6 +85,19 @@ export default function Login() {
             >
               {loading ? 'Connexion en cours...' : 'Se connecter'}
             </button>
+          </div>
+          <div>
+            <Link
+              to={'/signup'}
+              type="button"
+              className="flex w-full justify-center rounded-md border-indigo-600 border-2 px-3 py-1.5 text-sm font-semibold leading-6 text-indigo-600 shadow-sm hover:bg-indigo-500 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+              onClick={handleLogin}
+              disabled={loading}
+            >
+              <p>
+                S'incscrire
+              </p>
+            </Link>
           </div>
         </form>
         {error && <p style={{ color: 'red' }}>{error}</p>}
