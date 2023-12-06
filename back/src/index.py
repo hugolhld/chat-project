@@ -6,17 +6,30 @@ import numpy as np
 import pymysql
 # from decouple import config
 from dotenv import load_dotenv
+from flask_jwt_extended import JWTManager, create_access_token, get_jwt_identity, jwt_required
+from flask_bcrypt import Bcrypt
 
 app = Flask(__name__)
 CORS(app)
 
 load_dotenv()
 
-app.config['MYSQL_HOST'] = os.getenv('MYSQL_HOST')
-app.config['MYSQL_USER'] = os.getenv('MYSQL_USER')
-app.config['MYSQL_PASSWORD'] = os.getenv('MYSQL_PASSWORD')
-app.config['MYSQL_DB'] = os.getenv('MYSQL_DB')
-app.config['MYSQL_PORT'] = int(os.getenv('MYSQL_PORT'))
+app.config['MYSQL_HOST'] = '185.224.137.180'
+app.config['MYSQL_USER'] = 'u549231978_hetic_g_02'
+app.config['MYSQL_PASSWORD'] = 'Hetic2023$'
+app.config['MYSQL_DB'] = 'u549231978_hetic_g_02'
+app.config['MYSQL_PORT'] = 3306
+app.config['SECRET_KEY'] = 'je-deverouille-vos_mdp'
+
+# app.config['MYSQL_HOST'] = os.getenv('MYSQL_HOST')
+# app.config['MYSQL_USER'] = os.getenv('MYSQL_USER')
+# app.config['MYSQL_PASSWORD'] = os.getenv('MYSQL_PASSWORD')
+# app.config['MYSQL_DB'] = os.getenv('MYSQL_DB')
+# app.config['MYSQL_PORT'] = int(os.getenv('MYSQL_PORT'))
+# app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
+
+jwt = JWTManager(app)
+bcrypt = Bcrypt(app)
 
 mysql = pymysql.connect(
     host=app.config['MYSQL_HOST'],
@@ -41,6 +54,36 @@ print(os.listdir(os.getcwd()))
 def home():
     print(os.listdir(os.getcwd()))
     return 'Je suis bien sur la page principale'
+
+@app.route('/login', methods=['POST'])
+def login():
+    try:
+        data = request.get_json()
+
+        required_fields = ['email', 'password']
+
+        for field in required_fields:
+            if field not in data:
+                return jsonify({'error': f'Le champ {field} est manquant'}), 400
+
+        conn = pymysql.connect(**db_config)
+
+        try:
+            with conn.cursor() as cursor:
+                sql = "SELECT * FROM users WHERE email = %s"
+                cursor.execute(sql, (data['email'],))
+                user = cursor.fetchone()
+
+                if user and bcrypt.check_password_hash(user['password'], data['password']):
+                    access_token = create_access_token(identity={'email': data['email']})
+                    return jsonify({'access_token': access_token})
+                else:
+                    return jsonify({'error': 'Les id sont incorrects'}), 401
+        finally:
+            conn.close()
+
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
 @app.route('/get_users/<int:user_id>', methods=['GET'])
 def get_users(user_id):
@@ -111,8 +154,11 @@ def add_user():
 
         try:
             with conn.cursor() as cursor:
+
+                hash_password = bcrypt.generate_password_hash(data['password']).decode('UTF-8')
+
                 sql = "INSERT INTO users (first_name, last_name, password, mail) VALUES (%s, %s, %s, %s)"
-                cursor.execute(sql, (data['firstName'], data['lastName'], data['password'], data['email']))
+                cursor.execute(sql, (data['firstName'], data['lastName'], hash_password, data['email']))
             conn.commit()
 
             return jsonify({'success': True})
