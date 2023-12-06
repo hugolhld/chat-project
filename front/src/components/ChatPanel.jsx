@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom"
 import Conversation from "./Conversation"
 
 export default function ChatPanel() {
@@ -16,12 +17,12 @@ export default function ChatPanel() {
             </div>
             
             {user ?
-                <a href="/profile" className="flex flex-col items-center bg-indigo-100 border border-gray-200 mt-4 w-full py-6 px-4 rounded-lg">
+                <Link to="/profile" className="flex flex-col items-center bg-indigo-100 border border-gray-200 mt-4 w-full py-6 px-4 rounded-lg">
                     <div className="h-20 w-20 rounded-full border flex justify-center items-center bg-indigo-500 text-3xl overflow-hidden">
                         A
                     </div>
                     <div className="text-sm font-semibold mt-2">Aminos</div>
-                </a>
+                </Link>
             : null
             }
             

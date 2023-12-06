@@ -48,6 +48,12 @@ ReactDOM.createRoot(document.getElementById('root')).render(
 									</PrivateRoute>
 								}
 								/>
+								<Route path='/profile' element={
+									<PrivateRoute>
+										<Profile />
+									</PrivateRoute>
+								}
+								/>
 							</Routes>
 						</div>
 					</div>

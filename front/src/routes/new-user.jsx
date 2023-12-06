@@ -24,7 +24,7 @@ const Form = () => {
     e.preventDefault();
     console.log(formData)
     try {
-      const response = await fetch('http://localhost:5000/register', {
+      const response = await fetch('https://back-chat-api.vercel.app/addUser', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

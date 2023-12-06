@@ -48,12 +48,12 @@ export default function ChatBox() {
                         <Message message="Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis, in." user="Henry"/>
                         {/* {history.map((message, index) => <Message key={index} message={message.message} />)} */}
                     </div>
-                </div>
-            </div>
-            <div className="flex flex-row items-center h-16 rounded-xl w-full px-4">
-                <div className="flex-grow">
-                    <div className="relative w-full">
-                        <input type="text" className="flex w-full border-slate-300 rounded-xl focus:outline-none focus:border-indigo-300 pl-4 h-10 bg-white" onChange={e => setMessage(e.target.value)} />
+                    <div className="my-4 flex flex-row items-center h-16 rounded-xl w-full px-4">
+                        <div className="flex-grow">
+                            <div className="relative w-full">
+                                <input type="text" className="flex w-full border-slate-300 rounded-xl focus:outline-none focus:border-indigo-300 pl-4 h-10 bg-white" onChange={e => setMessage(e.target.value)} />
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

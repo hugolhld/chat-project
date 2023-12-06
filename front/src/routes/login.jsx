@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useAuth } from '../components/AuthProvider';
 
 export default function Login() {
   const [username, setUsername] = useState('');
@@ -7,20 +8,45 @@ export default function Login() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const handleLogin = async () => {
+  const [formData, setFormData] = useState({
+    email: '',
+    password: '',
+  });
+
+  const handleChange = e => {
+    const {name, value} = e.target
+
+    setFormData({
+      ...formData,
+      [name]: value
+    })
+  }
+
+  const {setToken} = useAuth()
+  
+  const handleLogin = async (e) => {
+
+    e.preventDefault()
+
+    console.log(formData)
+
+
     setLoading(true);
     setError(null);
 
     try {
-      const response = await fetch('/api/login', {
+      const response = await fetch('https://back-chat-api.vercel.app/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ username, password }),
+        body: JSON.stringify(formData),
       });
 
       if (response.ok) {
+        const data = await response.json()
+        console.log(data)
+        setToken(data)
         console.log('Authentification réussie !');
       } else {
         const data = await response.json();
@@ -43,7 +69,7 @@ export default function Login() {
         </div>
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form className="space-y-6" action="#" method="POST">
+          <form className="space-y-6" onSubmit={handleLogin} method="POST">
             <div>
               <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
                 Adresse email
@@ -55,6 +81,7 @@ export default function Login() {
                   type="email"
                   autoComplete="email"
                   required
+                  onChange={handleChange}
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
@@ -73,6 +100,7 @@ export default function Login() {
                   type="password"
                   autoComplete="current-password"
                   required
+                  onChange={handleChange}
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
@@ -87,7 +115,7 @@ export default function Login() {
               </button>
             </div>
           {/* </div> */}
-          <div>
+          {/* <div>
             <button
               type="button"
               className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
@@ -96,7 +124,7 @@ export default function Login() {
             >
               {loading ? 'Connexion en cours...' : 'Se connecter'}
             </button>
-          </div>
+          </div> */}
           <div>
             <Link
               to={'/signup'}
