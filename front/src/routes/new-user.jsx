@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
+
 
 const Form = () => {
   const [formData, setFormData] = useState({
@@ -96,9 +98,9 @@ const Form = () => {
 
                     <div className="text-grey-dark mt-6">
                         Already have an account? 
-                        <a className="no-underline border-b border-blue text-blue" href="../login/">
+                        <Link className="no-underline border-b border-blue text-blue" to={'/login'}>
                             Log in
-                        </a>.
+                        </Link>.
                     </div>
                 </div>
             </div>
