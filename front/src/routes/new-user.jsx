@@ -1,8 +1,11 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 
 const Form = () => {
+
+  const navigation = useNavigate()
+
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -34,6 +37,7 @@ const Form = () => {
 
       if (response.ok) {
         console.log('Inscription réussie !');
+        navigation('/login')
       } else {
         console.error('Erreur lors de l\'inscription.');
       }

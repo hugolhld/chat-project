@@ -7,7 +7,7 @@ import Form from './routes/new-user.jsx'
 import ChatPanel from './components/ChatPanel.jsx';
 import Login from './routes/login.jsx';
 import ChatBox from './routes/chat.jsx';
-import { AuthProvider } from './components/AuthProvider.jsx';
+// import { AuthProvider } from './components/AuthProvider.jsx';
 import PrivateRoute from './components/PrivateRoute.jsx';
 
 // const router = createBrowserRouter([
@@ -32,7 +32,7 @@ import PrivateRoute from './components/PrivateRoute.jsx';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
 	<React.StrictMode>
-		<AuthProvider>
+		{/* <AuthProvider> */}
 			<Router>
 					<div className="flex h-screen justify-center antialiased text-gray-800 bg-white">
 						<div className="flex flex-row h-full max-w-7xl w-full overflow-x-hidden">
@@ -58,7 +58,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
 						</div>
 					</div>
 			</Router>
-		</AuthProvider>
+		{/* </AuthProvider> */}
 	</React.StrictMode>
 	// <React.StrictMode>
 	// 	<div className="flex h-screen justify-center antialiased text-gray-800 bg-white">

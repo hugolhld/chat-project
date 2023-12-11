@@ -1,12 +1,16 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { useAuth } from '../components/AuthProvider';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
+// import { login } from '../components/Auth';
+// import {useToken} from 'react-token-auth'
+
 
 export default function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+
+  // const [token, setToken] = useToken()
 
   const [formData, setFormData] = useState({
     email: '',
@@ -22,7 +26,9 @@ export default function Login() {
     })
   }
 
-  const {setToken} = useAuth()
+  // const {setToken} = useAuth()
+
+  const navigate = useNavigate()
   
   const handleLogin = async (e) => {
 
@@ -37,6 +43,7 @@ export default function Login() {
     try {
       const response = await fetch('https://back-chat-api.vercel.app/login', {
         method: 'POST',
+        mode: 'cors',
         headers: {
           'Content-Type': 'application/json',
         },
@@ -45,9 +52,16 @@ export default function Login() {
 
       if (response.ok) {
         const data = await response.json()
-        console.log(data)
-        setToken(data)
+        // setToken(data)
+        // login(data.access_token)
+        if(data.access_token) {
+          // setToken(data.access_token)
+          localStorage.setItem('token', data.access_token)
+          // return data.access_token
+        }
+        navigate('/')
         console.log('Authentification réussie !');
+        // return <Navigate to={'/'} />
       } else {
         const data = await response.json();
         setError(data.message || 'Une erreur s\'est produite lors de la connexion.');

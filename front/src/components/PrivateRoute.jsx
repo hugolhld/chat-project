@@ -1,22 +1,35 @@
 
 import { useEffect } from 'react'
-import { useAuth } from './AuthProvider'
-import { Navigate, Route } from 'react-router-dom'
+// import { useAuth } from './AuthProvider'
+import { Navigate, Route, useNavigate } from 'react-router-dom'
+import { getToken } from './Auth'
+// import {PrivateRoute as AuthenticatedRoute} from 'react-token-auth'
 
 // eslint-disable-next-line react/prop-types
 const PrivateRoute = ({ children }) => {
 
-    const {token} = useAuth()
+    const isAuth = !!getToken()
+    const navigate = useNavigate()
 
     useEffect(() => {
-      console.log(token)
-    }, [])
+      if(!isAuth) {
+        navigate('/login')
+      }
+    }, [isAuth])
     
 
-    if(!token) {
-      console.log('vous netes pas logg')
-        // return <Navigate to={'/login'} />
-    }
+
+    // const {token} = useAuth()
+
+    // useEffect(() => {
+    //   console.log(token)
+    // }, [])
+    
+
+    // if(!token) {
+    //   console.log('vous netes pas logg')
+    //     // return <Navigate to={'/login'} />
+    // }
 
   return children
 }
